@@ -1,4 +1,4 @@
-#Project_Name_Goes_Here
+#Artificial Neural Networks
 ============
 
 Main description of the package goes here. Lorem ipsum dolor sit amet, tollit lucilius vis an. Placerat imperdiet ei qui, usu ei ipsum laboramus deterruisset. Id veri sonet qui. Ius in indoctum explicari, ei nec fastidii invenire. Eu exerci intellegam his, in fastidii mnesarchum persequeris qui. Ne has prima utinam pertinacia. Mei invidunt postulant et, ne pri diam illum.
@@ -64,4 +64,4 @@ Contact [Camilo Valdes](mailto:camilo@castflyer.com) for pull requests, bug repo
 
 ## License
 
-The software in this repository is available under the LICENSE_TYPE_GOES_HERE.  See the LICENSE file for more information.
+The software in this repository is available under the [GNU General Public License, version 3](https://github.com/camilo-v/Neural-Networks/blob/master/LICENSE).  See the [LICENSE](https://github.com/camilo-v/Neural-Networks/blob/master/LICENSE) file for more information.
