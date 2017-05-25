@@ -50,7 +50,7 @@ You will need a reasonably modern computer and operating system that can support
 
 ## Contact
 
-Contact [Camilo Valdes](mailto:camilo@castflyer.com) for pull requests, bug reports, good jokes and coffee recipes.
+Contact [Camilo Valdes](mailto:camilo@castflyer.com) for pull requests, bug reports, good jokes, and coffee recipes.
 
 ### Maintainers
 
