@@ -37,16 +37,17 @@
 import numpy as np
 
 class Perceptron(object):
-    """Perceptron Classifier.
-        This module implements the Perceptron Learning algorithm.
+    """
+    Perceptron Classifier.
+    This module implements the Perceptron Learning algorithm.
 
-        Parameters:
-            eta : float Learning rate (between 0.0 and 1.0)
-            n_iter : int Number of passes over the entire dataset (epochs).
+    Parameters:
+        eta (float): Learning rate (between 0.0 and 1.0)
+        n_iter (int): Number of passes over the entire dataset (epochs).
 
-        Attributes:
-            w_ : 1-d array and the weights after fitting.
-            errors_ : list Number of misclassifications in every epoch.
+    Attributes:
+        w_ (1-d array): and the weights after fitting.
+        errors_ (list): Number of misclassifications in every epoch.
     """
 
     def __init__(self, eta=0.01, n_iter=10):
@@ -55,11 +56,14 @@ class Perceptron(object):
 
     def fit(self, X, y):
         """
-        Fits the training data.
-        :param X:   {array-like}, shape = [n_samples, n_feature] Training vectors, where n_samples is the number of
-                    samples and n_features is the number of features.
-        :param y:   array-like, shape = [n_samples] Target values.
-        :return: self : object
+        Fits the training data, and allows the Perceptron algorithm to learn.
+        Args:
+            X (array-like): Training vectors, where n_samples is the number of samples and n_features is the number of
+            features. Shape = [n_samples, n_feature].
+            y (array-like): Target Values. Shape =[n_samples]
+
+        Returns:
+            self (object): Returns itself with updated weights.
         """
 
         self.w_ = np.zeros(1 + X.shape[1])
@@ -81,17 +85,25 @@ class Perceptron(object):
 
     def net_input(self, X):
         """
-        Calculates the Net Input for a given neuron.
-        :param X:
-        :return:
+        Calculates the Net Input for a neuron.
+        Args:
+            X (array-like): Training vectors, where n_samples is the number of samples and n_features is the number of
+            features. Shape = [n_samples, n_feature].
+
+        Returns:
+            A Numpy array
         """
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
         """
-        Return class label after unit step.
-        :param X:
-        :return:
+        Returns the class label after a unit step.
+        Args:
+            X (array-like): Training vectors, where n_samples is the number of samples and n_features is the number of
+            features. Shape = [n_samples, n_feature].
+
+        Returns:
+            A Numpy array
         """
         return np.where(self.net_input(X) >= 0.0, 1, -1)
 
