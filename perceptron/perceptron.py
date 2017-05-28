@@ -66,7 +66,10 @@ class Perceptron(object):
             self (object): Returns itself with updated weights.
         """
 
+        #   Initialize weights to zero
         self.w_ = np.zeros(1 + X.shape[1])
+
+        #   Track the misclassifications for a given epoch
         self.errors_ = []
 
         for _ in range(self.n_iter):
@@ -91,8 +94,11 @@ class Perceptron(object):
             features. Shape = [n_samples, n_feature].
 
         Returns:
-            A Numpy array
+            float: The net input (dot product) calculated from the input layer.
         """
+
+        #   Return the dot-product of w (transposed) and x
+        #   Note: self.w_[0] is basically the "threshold" or so-called "bias unit."
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
@@ -103,7 +109,6 @@ class Perceptron(object):
             features. Shape = [n_samples, n_feature].
 
         Returns:
-            A Numpy array
+            ndarray: A Numpy array value with the expected (predicted) label of the pattern.
         """
         return np.where(self.net_input(X) >= 0.0, 1, -1)
-
