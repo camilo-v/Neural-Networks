@@ -38,7 +38,15 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import time
 import csv
+import perceptron
+
+# ------------------------------------------------------ Main ---------------------------------------------------------
+#
+#
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Perceptron" + "" )
 
 filePathForInputFile = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
 
@@ -92,3 +100,24 @@ print(targetValues_y)
 
 print("Feature Matrix (X): ")
 print(featureMatrix_X)
+
+# --------------------------------------------------- Perceptron ------------------------------------------------------
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Perceptron" + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Creating Data Structures..." + "" )
+
+#   Create a Pandas Dataframe from the regular array
+#   .T transposes the array, and as_matrix() converts it to a numpy.ndarray
+df_y = pd.DataFrame(targetValues_y).T.as_matrix()
+print(df_y)
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
+
+#   Create a Pandas Dataframe from the regular feature matrix
+#   as_matrix() converts it to a numpy.ndarray
+df_X = pd.DataFrame(featureMatrix_X).as_matrix()
+print(df_X)
+
+ppn = perceptron.Perceptron( eta=0.1, n_iter=10 )
+ppn.fit( df_X, df_y )
