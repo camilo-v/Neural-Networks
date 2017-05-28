@@ -40,23 +40,55 @@ import numpy as np
 import pandas as pd
 import csv
 
-filePathForInputFile = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-training.txt"
+filePathForInputFile = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
+
+#   Array with target values
+targetValues_y = []
+
+#   Create a feature matrix
+w, h = 20, 25
+featureMatrix_X = [[0 for x in range(w)] for y in range(h)]
+
+# --------------------------------------------------- File Loading ----------------------------------------------------
+
+patternNumber = 0
 
 with open( filePathForInputFile, 'r' ) as INFILE:
 
     reader = csv.reader( INFILE, delimiter='\t' )
 
     try:
-        for row_line in reader:
+        for row_line in reader:     # row_line is a list, not a string
 
-            newRowArray = []
+            if ''.join(row_line).startswith("#"):
+                print( "\nComment. Starting new letter recognition..." )
+            else:
+                patternArray = []
+                patternLabel = ""
 
-            for (index, valueOfCell) in enumerate( row_line ):
+                for (index, valueOfCell) in enumerate( row_line ):
 
-                if index == 0:
-                    continue
-                else:
-                    newRowArray.append( valueOfCell )
+                    if index != (len( row_line ) - 1):
+                        patternArray.append( valueOfCell )
+                        featureMatrix_X[patternNumber][index] = valueOfCell
+
+                    if index == (len( row_line ) - 1):
+                        patternLabel = valueOfCell
+
+                print(patternArray)
+                print(patternLabel)
+
+                targetValues_y.append(patternLabel)
+
+                patternNumber += 1
 
     except csv.Error as e:
         sys.exit( "File %s, line %d: %s" % (filePathForInputFile, reader.line_num, e) )
+
+# ------------------------------------------------- Data Inspection ---------------------------------------------------
+
+print("Target Values (y): ")
+print(targetValues_y)
+
+print("Feature Matrix (X): ")
+print(featureMatrix_X)
