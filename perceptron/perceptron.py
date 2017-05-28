@@ -10,7 +10,7 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#   The purpose of this program is to...
+#   The purpose of this program is to implement the Perceptron classifier.
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
