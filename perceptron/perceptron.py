@@ -66,8 +66,10 @@ class Perceptron(object):
             self (object): Returns itself with updated weights.
         """
 
-        #   Initialize weights to zero
+        #   Initialize weights to zero. Note shape[1] is number of columns, and shape[0] is number of rows.
         self.w_ = np.zeros(1 + X.shape[1])
+        print("Initial Weights: ")
+        print(self.w_)
 
         #   Track the misclassifications for a given epoch
         self.errors_ = []
@@ -76,10 +78,18 @@ class Perceptron(object):
 
             errors = 0
 
+            #   The 'zip()' function returns a list of tuples, where the i-th tuple contains the i-th element from
+            #   each of the argument sequences or iterables.
             for xi, target in zip(X, y):
-                update = self.eta * (target - self.predict(xi))
+
+                #   self.eta is the learning rate
+                update = self.eta * ( target - self.predict( xi ) )
+
+                #   Update the weights (including the bias)
                 self.w_[1:] += update * xi
                 self.w_[0] += update
+
+                #   Keep track of the errors
                 errors += int(update != 0.0)
 
             self.errors_.append(errors)
@@ -99,6 +109,7 @@ class Perceptron(object):
 
         #   Return the dot-product of w (transposed) and x
         #   Note: self.w_[0] is basically the "threshold" or so-called "bias unit."
+        # print("Bias: " + str(self.w_[0]))
         return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
