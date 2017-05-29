@@ -33,7 +33,6 @@
 
 #   Python Modules
 import sys
-import time
 import csv
 
 # --------------------------------------------------- Functions -------------------------------------------------------
@@ -69,7 +68,8 @@ def readTrainingData(filePath):
             for row_line in reader:  # row_line is a list, not a string
 
                 if ''.join( row_line ).startswith( "#" ):
-                    print( "\nComment. Starting new letter recognition..." )
+                    # print( "\nComment. Starting new letter recognition..." )
+                    continue
                 else:
                     patternArray = []
                     patternLabel = ""
@@ -83,8 +83,8 @@ def readTrainingData(filePath):
                         if index == (len( row_line ) - 1):
                             patternLabel = int( valueOfCell )
 
-                    print( patternArray )
-                    print( patternLabel )
+                    # print( patternArray )
+                    # print( patternLabel )
 
                     targetValues_y.append( patternLabel )
 
