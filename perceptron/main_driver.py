@@ -10,8 +10,7 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#   The purpose of this program is to visualize the input data, simple 4x5 letter representations, as a two-class
-#   problem.
+#   The purpose of this program is to run the main code for Project 1.
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
