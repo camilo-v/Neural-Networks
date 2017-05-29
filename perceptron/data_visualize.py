@@ -77,11 +77,11 @@ with open( filePathForInputFile, 'r' ) as INFILE:
                 for (index, valueOfCell) in enumerate( row_line ):
 
                     if index != (len( row_line ) - 1):
-                        patternArray.append( valueOfCell )
-                        featureMatrix_X[patternNumber][index] = valueOfCell
+                        patternArray.append( int(valueOfCell) )
+                        featureMatrix_X[patternNumber][index] = int(valueOfCell)
 
                     if index == (len( row_line ) - 1):
-                        patternLabel = valueOfCell
+                        patternLabel = int(valueOfCell)
 
                 print(patternArray)
                 print(patternLabel)
