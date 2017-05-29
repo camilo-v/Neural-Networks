@@ -85,10 +85,10 @@ class Perceptron(object):
                 #   Perceptron Learning Rule. Recall that self.eta is the learning rate.
                 update = self.eta * ( target - self.predict( xi ) )
 
-                print("-----------")
-                print(update)
-                print(xi)
-                print(xi.shape)
+                # print("-----------")
+                # print(update)
+                # print(xi)
+                # print(xi.shape)
 
                 #   Update the weights (including the bias)
                 self.w_[1:] += update * xi
