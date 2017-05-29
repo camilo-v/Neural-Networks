@@ -33,13 +33,17 @@
 #
 # ---------------------------------------------------------------------------------------------------------------------
 
+#   Python Modules
+import os
 import sys
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 import time
-import csv
 import perceptron
+
+#   Custom Modules
+sys.path.append(os.path.join(os.path.dirname(__file__), ''))
+import utility_functions as uf
 
 # ------------------------------------------------------ Main ---------------------------------------------------------
 #
@@ -47,81 +51,45 @@ import perceptron
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Perceptron" + "" )
 
-filePathForInputFile = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
+filePathForTraining_A = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
 
-#   Array with target values
-targetValues_y = []
+# ---------------------------------------------- Training Data Loading ------------------------------------------------
 
-#   Create a feature matrix
-w, h = 20, 25
-featureMatrix_X = [[0 for x in range(w)] for y in range(h)]
+#   Load the training data for the letter A, and get back an array with target values (y) and feature matrix (X).
+trainingTargetValues_y, trainingFeatureMatrix_X = uf.readTrainingData(filePathForTraining_A)
 
-# --------------------------------------------------- File Loading ----------------------------------------------------
-
-patternNumber = 0
-
-with open( filePathForInputFile, 'r' ) as INFILE:
-
-    reader = csv.reader( INFILE, delimiter='\t' )
-
-    try:
-        for row_line in reader:     # row_line is a list, not a string
-
-            if ''.join(row_line).startswith("#"):
-                print( "\nComment. Starting new letter recognition..." )
-            else:
-                patternArray = []
-                patternLabel = ""
-
-                for (index, valueOfCell) in enumerate( row_line ):
-
-                    if index != (len( row_line ) - 1):
-                        patternArray.append( int(valueOfCell) )
-                        featureMatrix_X[patternNumber][index] = int(valueOfCell)
-
-                    if index == (len( row_line ) - 1):
-                        patternLabel = int(valueOfCell)
-
-                print(patternArray)
-                print(patternLabel)
-
-                targetValues_y.append(patternLabel)
-
-                patternNumber += 1
-
-    except csv.Error as e:
-        sys.exit( "File %s, line %d: %s" % (filePathForInputFile, reader.line_num, e) )
-
-# ------------------------------------------------- Data Inspection ---------------------------------------------------
+# -------------------------------------------- Training Data Inspection -----------------------------------------------
 
 print("Target Values (y): ")
-print(targetValues_y)
+print(trainingTargetValues_y)
 
 print("Feature Matrix (X): ")
-print(featureMatrix_X)
+print(trainingFeatureMatrix_X)
 
 # --------------------------------------------------- Perceptron ------------------------------------------------------
-
+#
+#   Train the perceptron algorithm.
+#
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Perceptron" + "" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Creating Data Structures..." + "" )
 
 #   Create a Pandas Dataframe from the regular array
 #   .T transposes the array, and as_matrix() converts it to a numpy.ndarray
-df_y = pd.DataFrame(targetValues_y).as_matrix()
+df_y = pd.DataFrame(trainingTargetValues_y).as_matrix()
 print(df_y)
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 #   Create a Pandas Dataframe from the regular feature matrix
 #   as_matrix() converts it to a numpy.ndarray
-df_X = pd.DataFrame(featureMatrix_X).as_matrix()
+df_X = pd.DataFrame(trainingFeatureMatrix_X).as_matrix()
 print(df_X)
 
 ppn = perceptron.Perceptron( eta=0.1, n_iter=10 )
 ppn.fit( df_X, df_y )
 
-# ----------------------------------------------------- Errors --------------------------------------------------------
+# -------------------------------------------- Perceptron Training Errors ---------------------------------------------
 #
 #   Plot the misclassification errors versus the number of epochs to see if the Perceptron converges after a given
 #   number of epochs.
