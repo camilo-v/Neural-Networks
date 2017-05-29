@@ -108,7 +108,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Cre
 
 #   Create a Pandas Dataframe from the regular array
 #   .T transposes the array, and as_matrix() converts it to a numpy.ndarray
-df_y = pd.DataFrame(targetValues_y).T.as_matrix()
+df_y = pd.DataFrame(targetValues_y).as_matrix()
 print(df_y)
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
@@ -120,3 +120,14 @@ print(df_X)
 
 ppn = perceptron.Perceptron( eta=0.1, n_iter=10 )
 ppn.fit( df_X, df_y )
+
+# ----------------------------------------------------- Errors --------------------------------------------------------
+#
+#   Plot the misclassification errors versus the number of epochs to see if the Perceptron converges after a given
+#   number of epochs.
+#
+plt.plot(range(1, len(ppn.errors_) + 1), ppn.errors_, marker='o')
+plt.xlabel('Epochs')
+plt.ylabel('Number of Misclassifications')
+plt.tight_layout()
+plt.show()

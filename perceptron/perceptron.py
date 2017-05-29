@@ -82,8 +82,13 @@ class Perceptron(object):
             #   each of the argument sequences or iterables.
             for xi, target in zip(X, y):
 
-                #   self.eta is the learning rate
+                #   Perceptron Learning Rule. Recall that self.eta is the learning rate.
                 update = self.eta * ( target - self.predict( xi ) )
+
+                print("-----------")
+                print(update)
+                print(xi)
+                print(xi.shape)
 
                 #   Update the weights (including the bias)
                 self.w_[1:] += update * xi
