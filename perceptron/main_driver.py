@@ -102,16 +102,16 @@ print(featureMatrix_X)
 
 # --------------------------------------------------- Perceptron ------------------------------------------------------
 
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Perceptron" + "" )
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Creating Data Structures..." + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Perceptron" + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Creating Data Structures..." + "" )
 
 #   Create a Pandas Dataframe from the regular array
 #   .T transposes the array, and as_matrix() converts it to a numpy.ndarray
 df_y = pd.DataFrame(targetValues_y).as_matrix()
 print(df_y)
 
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 #   Create a Pandas Dataframe from the regular feature matrix
 #   as_matrix() converts it to a numpy.ndarray
