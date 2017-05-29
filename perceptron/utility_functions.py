@@ -108,7 +108,7 @@ def readTestingData(filePath):
     filePathForInputFile = filePath
 
     #   Create a feature matrix
-    w, h = 19, 25
+    w, h = 20, 25
     featureMatrix_X = [[0 for x in range( w )] for y in range( h )]
 
     # ------------------------------------------ Training Data Loading ------------------------------------------------
