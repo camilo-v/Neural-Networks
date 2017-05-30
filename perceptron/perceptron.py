@@ -94,7 +94,7 @@ class Perceptron(object):
                 self.w_[1:] += update * xi
                 self.w_[0] += update
 
-                #   Keep track of the errors
+                #   Stopping Condition - Keep track of the errors
                 errors += int(update != 0.0)
 
             self.errors_.append(errors)
