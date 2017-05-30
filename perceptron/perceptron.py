@@ -46,7 +46,7 @@ class Perceptron(object):
         n_iter (int): Number of passes over the entire dataset (epochs).
 
     Attributes:
-        w_ (1-d array): and the weights after fitting.
+        w_ (1-d array): Weights after fitting.
         errors_ (list): Number of misclassifications in every epoch.
     """
 
