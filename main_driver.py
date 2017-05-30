@@ -184,7 +184,8 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #   Matplotlib objects to hold dual-pane figure
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
 
-ada1 = adaline.Adaline(n_iter=10, eta=0.01).fit( df_X, df_y )
+ada1 = adaline.Adaline(n_iter=10, eta=0.01)
+ada1.fit( df_X, df_y )
 ax[0].plot(range(1, len(ada1.cost_) + 1), np.log10(ada1.cost_), marker='o')
 ax[0].set_xlabel('Epochs')
 ax[0].set_ylabel('log(Sum-Squared-Error)')
