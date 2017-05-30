@@ -81,9 +81,25 @@ class Adaline(object):
             net_input = self.net_input( X )
             output = self.activation(X)
 
+            print("******************")
+            print(y.shape)
+            print(output.shape)
             errors = ( y - output )
+            print( errors.shape )
 
-            self.w_[1:] += self.eta * X.T.dot(errors)
+            print( "******************" )
+            print(X.T.shape)
+            print(self.eta)
+            print(X.T.dot( errors ).shape)
+            print( "******************" )
+
+            print(self.w_[1:].shape)
+            print((self.eta * X.T.dot( errors )).shape)
+
+            #   Calculate the gradient based on the whole training dataset for weights 1 to m
+            self.w_[1:] += self.eta * X.T.dot( errors )
+
+            #   Calculate the gradient based on the whole training dataset
             self.w_[0] += self.eta * errors.sum()
 
             cost = (errors**2).sum() / 2.0
@@ -101,7 +117,7 @@ class Adaline(object):
             numpy.ndarray Sum of net inputs
         """
 
-        return np.dot(X, self.w_[1:]) + self.w_[0]
+        return np.dot( X, self.w_[1:] ) + self.w_[0]
 
     def activation(self, X):
         """
