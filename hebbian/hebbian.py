@@ -81,14 +81,18 @@ class Hebbian(object):
             for xi, target in zip(X, y):
 
                 #   Hebb Learning Rule (self.eta is the learning rate).
-                update = self.eta * ( target - self.predict( xi ) )
+                #   Weights updated based on
+                #       weight_change = learning_rate * input * output
+                #
+                # update = self.eta * ( target - self.predict( xi ) )
+                hebb_update = self.eta * xi * self.predict( xi )
 
                 #   Update the weights (including the bias)
-                self.w_[1:] += update * xi
-                self.w_[0] += update
+                self.w_[1:] += hebb_update
+                self.w_[0] += hebb_update
 
                 #   Stopping Condition - Keep track of the errors
-                errors += int(update != 0.0)
+                errors += int(hebb_update != 0.0)
 
             self.errors_.append(errors)
 
