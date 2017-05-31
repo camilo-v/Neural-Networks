@@ -34,6 +34,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 # 	Python Modules
+import time
 import numpy as np
 
 class Perceptron(object):
@@ -68,8 +69,6 @@ class Perceptron(object):
 
         #   Initialize weights to zero. Note shape[1] is number of columns, and shape[0] is number of rows.
         self.w_ = np.zeros(1 + X.shape[1])
-        print("Initial Weights: ")
-        print(self.w_)
 
         #   Track the misclassifications for a given epoch
         self.errors_ = []
@@ -84,11 +83,6 @@ class Perceptron(object):
 
                 #   Perceptron Learning Rule. Recall that self.eta is the learning rate.
                 update = self.eta * ( target - self.predict( xi ) )
-
-                # print("-----------")
-                # print(update)
-                # print(xi)
-                # print(xi.shape)
 
                 #   Update the weights (including the bias)
                 self.w_[1:] += update * xi
