@@ -58,8 +58,9 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Project 1 - Single Layer Networks" + "" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
 
-#   Training Data for letter A
-filePathForTraining_A = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
+#   Training Data for letters A and E.
+# filePathForTraining = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-A-training.txt"
+filePathForTraining = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-E-training.txt"
 
 #   Paths for testing sets
 pathForTestingSet_1 = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/data/letters/data-testing_set_1.txt"
@@ -71,7 +72,7 @@ pathForTestingSet_3 = "/Users/camilo/Documents/Development/GitHub/Neural-Network
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Loading Training Data..." + "" )
 
 #   Load the training data for the letter A, and get back an array with target values (y) and feature matrix (X).
-trainingTargetValues_y, trainingFeatureMatrix_X = uf.readTrainingData(filePathForTraining_A)
+trainingTargetValues_y, trainingFeatureMatrix_X = uf.readTrainingData( filePathForTraining )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Creating Data Structures..." + "" )
 
@@ -152,7 +153,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #   Initialize the Perceptron, and train it with the "fit" method.
 #
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Initializing Perceptron..." + "" )
-ppn = perceptron.Perceptron( eta=0.1, n_iter=10 )
+ppn = perceptron.Perceptron( eta=0.5, n_iter=10 )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Training Perceptron..." + "" )
 ppn.fit( df_X, df_y )
@@ -166,7 +167,7 @@ plt.plot(range(1, len( ppn.errors_ ) + 1), ppn.errors_, marker='o')
 plt.xlabel('Epochs')
 plt.ylabel('Number of Misclassifications')
 plt.tight_layout()
-# plt.show()
+plt.show()
 
 #   Perceptron Testing
 #   Now that we have loaded the testing sets as feature matrices, we will use the Perceptron's class "predict" method
@@ -180,6 +181,7 @@ PerceptronTestingSet_3_error = 0
 #   Testing Dataset I
 for xi, target in zip(df_testingSet_1_X, df_y):
     testResult = target - ppn.predict( xi )
+    print( testResult )
     PerceptronTestingSet_1_error += int( testResult != 0.0 )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Perceptron Test Set 1 Error: " +
@@ -188,6 +190,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Pe
 #   Testing Dataset II
 for xi, target in zip(df_testingSet_2_X, df_y):
     testResult = target - ppn.predict( xi )
+    print( testResult )
     PerceptronTestingSet_2_error += int( testResult != 0.0 )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Perceptron Test Set 2 Error: " +
@@ -196,6 +199,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Pe
 #   Testing Dataset III
 for xi, target in zip(df_testingSet_3_X, df_y):
     testResult = target - ppn.predict( xi )
+    print( testResult )
     PerceptronTestingSet_3_error += int( testResult != 0.0 )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Perceptron Test Set 3 Error: " +
@@ -209,6 +213,8 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #   Train the Adaline classifier algorithm.
 #
 
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Initializing ADALINE..." + "" )
+
 #   Matplotlib objects to hold dual-pane figure
 fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
 
@@ -219,7 +225,7 @@ ax[0].set_xlabel('Epochs')
 ax[0].set_ylabel('log(Sum-Squared-Error)')
 ax[0].set_title('Adaline - Learning rate 0.01')
 
-ada2 = adaline.Adaline(n_iter=10, eta=0.0001).fit( df_X, df_y )
+ada2 = adaline.Adaline(n_iter=50, eta=0.0001).fit( df_X, df_y )
 ax[1].plot(range(1, len(ada2.cost_) + 1), ada2.cost_, marker='o')
 ax[1].set_xlabel('Epochs')
 ax[1].set_ylabel('Sum-Squared-Error')
@@ -227,3 +233,40 @@ ax[1].set_title('Adaline - Learning rate 0.0001')
 
 plt.tight_layout()
 plt.show()
+
+
+#   Adaline Testing
+#   Now that we have trained the Adaline classifier, we can go ahead and test it with 50 epochs and a
+#   learning rate of 0.0001
+
+AdalineTestingSet_1_error = 0
+AdalineTestingSet_2_error = 0
+AdalineTestingSet_3_error = 0
+
+for xi, target in zip(df_testingSet_1_X, df_y):
+    testResult = target - ada2.predict( xi )
+    print( testResult )
+    AdalineTestingSet_1_error += int( testResult != 0.0 )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Adaline Test Set 1 Error: " +
+       str(AdalineTestingSet_1_error) )
+
+#   Testing Dataset II
+for xi, target in zip(df_testingSet_2_X, df_y):
+    testResult = target - ada2.predict( xi )
+    print( testResult )
+    AdalineTestingSet_2_error += int( testResult != 0.0 )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Adaline Test Set 2 Error: " +
+       str(AdalineTestingSet_2_error) )
+
+#   Testing Dataset III
+for xi, target in zip(df_testingSet_3_X, df_y):
+    testResult = target - ada2.predict( xi )
+    print( testResult )
+    AdalineTestingSet_3_error += int( testResult != 0.0 )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Adaline Test Set 3 Error: " +
+       str(AdalineTestingSet_3_error) )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
