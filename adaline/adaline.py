@@ -73,31 +73,20 @@ class Adaline(object):
             self An object type.
         """
 
-        self.w_ = np.zeros( 1 + X.shape[1] )
+        self.w_ = np.array(np.zeros( 1 + X.shape[1] ))
+        self.w_ = self.w_[:, np.newaxis]    # Adds a new axis -> 2D array. Required to update the weights.
         self.cost_ = []
 
         for i in range(self.n_iter):
 
-            net_input = self.net_input( X )
-            output = self.activation(X)
+            output = self.activation( X )
 
-            print("******************")
-            print(y.shape)
-            print(output.shape)
-            errors = ( y - output )
-            print( errors.shape )
-
-            print( "******************" )
-            print(X.T.shape)
-            print(self.eta)
-            print(X.T.dot( errors ).shape)
-            print( "******************" )
-
-            print(self.w_[1:].shape)
-            print((self.eta * X.T.dot( errors )).shape)
+            errors = (y - output)
 
             #   Calculate the gradient based on the whole training dataset for weights 1 to m
-            self.w_[1:] += self.eta * X.T.dot( errors )
+            #   Note that np.asarray(self.w_[1:]) is required so that Numpy can see the vector of weights
+            #   correctly and it can perform the dot product.
+            self.w_[1:] = np.add( np.asarray(self.w_[1:]), self.eta * X.T.dot( errors ) )
 
             #   Calculate the gradient based on the whole training dataset
             self.w_[0] += self.eta * errors.sum()
