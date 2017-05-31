@@ -34,6 +34,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 # 	Python Modules
+import time
 import numpy as np
 
 class Hebbian(object):
@@ -84,17 +85,19 @@ class Hebbian(object):
                 #   Weights updated based on
                 #       weight_change = learning_rate * input * output
                 #
-                # update = self.eta * ( target - self.predict( xi ) )
-                hebb_update = self.eta * xi * self.predict( xi )
+                hebb_update = self.eta * self.predict( xi )
 
                 #   Update the weights (including the bias)
-                self.w_[1:] += hebb_update
+                self.w_[1:] += hebb_update * xi
                 self.w_[0] += hebb_update
 
                 #   Stopping Condition - Keep track of the errors
                 errors += int(hebb_update != 0.0)
 
             self.errors_.append(errors)
+
+        print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ] HEBB: Last Weights" )
+        print(self.w_[1:])
 
         return self
 
