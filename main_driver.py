@@ -225,11 +225,11 @@ ax[0].set_xlabel('Epochs')
 ax[0].set_ylabel('log(Sum-Squared-Error)')
 ax[0].set_title('Adaline - Learning rate 0.01')
 
-ada2 = adaline.Adaline(n_iter=50, eta=0.0001).fit( df_X, df_y )
+ada2 = adaline.Adaline(n_iter=100, eta=0.005).fit( df_X, df_y )
 ax[1].plot(range(1, len(ada2.cost_) + 1), ada2.cost_, marker='o')
 ax[1].set_xlabel('Epochs')
 ax[1].set_ylabel('Sum-Squared-Error')
-ax[1].set_title('Adaline - Learning rate 0.0001')
+ax[1].set_title('Adaline - Learning rate 0.005')
 
 plt.tight_layout()
 plt.show()
