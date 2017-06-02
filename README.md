@@ -36,18 +36,27 @@ You will need a reasonably modern computer and operating system that can support
 ### Python Packages
 
 [NumPY](http://www.numpy.org).
+
 [SciPY](https://www.scipy.org).
+
 [Pandas](http://pandas.pydata.org).
+
 [scikit-learn](http://scikit-learn.org).
+
 [scikit-image](http://scikit-image.org).
+
 [TensorFlow](https://www.tensorflow.org).
+
 [Theano](http://deeplearning.net/software/theano/).
+
 [Matplotlib](https://matplotlib.org).
 
 ### R Libraries
 
 [Bioconductor](https://www.bioconductor.org).
+
 [MXNet](http://mxnet.io).
+
 [ggplot2](http://ggplot2.org).
 
 
