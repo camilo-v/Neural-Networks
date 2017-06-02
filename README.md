@@ -1,14 +1,22 @@
 Artificial Neural Networks
 ============
 
-Main description of the package goes here. Lorem ipsum dolor sit amet, tollit lucilius vis an. Placerat imperdiet ei qui, usu ei ipsum laboramus deterruisset. Id veri sonet qui. Ius in indoctum explicari, ei nec fastidii invenire. Eu exerci intellegam his, in fastidii mnesarchum persequeris qui. Ne has prima utinam pertinacia. Mei invidunt postulant et, ne pri diam illum.
+This is an assortment of miscellaneous scripts, programs, and datasets that deal with Artificial Neural Networks (ANN).
+Over the course of my dissertation work, I assembled the items in this repository to learn, break, and understand how
+ANNs work and what you can (and cannot) do with them.  Some of the code here was used to build solutions and sketches
+for class assignments.
 
-Ei sit facilis cotidieque, eam probo postulant ex, has ea minim dictas. Amet mnesarchum an vel, stet perfecto ut nam, ludus vituperatoribus pri id. Luptatum electram sea ne. Eu aeque pericula his.
+Most of the scripts in this repository are implementations in Python 3, or R.  Some bash scripts are peppered around 
+that serve as driver routines, or test cases, for a specific problem; but for the most part the solution implementations
+are in either Python or R.
+
+Visualizations are in either MatPlotLib or GGPlot, depending on the main language and task.
 
 
 ## How To Get Started
 
-- [Download the Code](https://github.com/camilo-v/) and follow the standard instructions on how to install the framework/library.
+- [Download the Code](https://github.com/camilo-v/Neural-Networks) and follow the standard instructions on how to 
+install the framework/library.
 
 ## Communication
 
@@ -20,32 +28,27 @@ Ei sit facilis cotidieque, eam probo postulant ex, has ea minim dictas. Amet mne
 
 The basic requirements for the software are:
 
-- Requirement 1
-- Requirement 2
-- Requirement 3
-- Requirement 4
+- Python 3, version 3.6.1.
+- R, version 3.3.1.
 
 You will need a reasonably modern computer and operating system that can support the above.
 
-### Requirement Package 1
+### Python Packages
 
-[Some Package](http://somePackageURLgoesHere) is required for SOMETHING.  See the [package documentation](http://packageDocsURLgoesHere) for more information.
+[NumPY](http://www.numpy.org).
+[SciPY](https://www.scipy.org).
+[Pandas](http://pandas.pydata.org).
+[scikit-learn](http://scikit-learn.org).
+[scikit-image](http://scikit-image.org).
+[TensorFlow](https://www.tensorflow.org).
+[Theano](http://deeplearning.net/software/theano/).
+[Matplotlib](https://matplotlib.org).
 
-### Requirement Package 2
+### R Libraries
 
-[Some Package](http://somePackageURLgoesHere) is required for SOMETHING.  See the [package documentation](http://packageDocsURLgoesHere) for more information.
-
-### Requirement Package 3
-
-[Some Package](http://somePackageURLgoesHere) is required for SOMETHING.  See the [package documentation](http://packageDocsURLgoesHere) for more information.  In addition, you will also need the following subpackages:
-
-- [subpackage 1](http://someURLGoes.here/)
-- [subpackage 2](http://someURLGoes.here/)
-- [subpackage 3](http://someURLGoes.here/)
-- [subpackage 4](http://someURLGoes.here/)
-- [subpackage 5](http://someURLGoes.here/)
-- [subpackage 6](http://someURLGoes.here/)
-
+[Bioconductor](https://www.bioconductor.org).
+[MXNet](http://mxnet.io).
+[ggplot2](http://ggplot2.org).
 
 
 ## Contact
@@ -55,11 +58,6 @@ Contact [Camilo Valdes](mailto:camilo@castflyer.com) for pull requests, bug repo
 ### Maintainers
 
 - [Camilo Valdes](mailto:camilo@castflyer.com)
-
-
-### Collaborators
-
-- [Collaborator Name](mailto:collab_name3@collabEmail)
 
 
 ## License
