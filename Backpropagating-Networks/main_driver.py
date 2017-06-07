@@ -3,8 +3,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #                                        Bioinformatics Research Group
-# 									        http://biorg.cis.fiu.edu/
-#                             			Florida International University
+#                                           http://biorg.cis.fiu.edu/
+#                                       Florida International University
 #
 #   This software is a "Camilo Valdes Work" under the terms of the United States Copyright Act.
 #   Please cite the author(s) in any work or product based on this material.
