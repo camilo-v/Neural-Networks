@@ -53,9 +53,9 @@ import utility_functions as uf
 # ------------------------------------------------------ Main ---------------------------------------------------------
 #
 #
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" + " Project 1 - Single Layer Networks" + "" )
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S',time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] " + "Project 2, Backpropagation Networks" + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 #   Base directory for project modules, files, etc.
 baseDirectoryForProject = "/Users/camilo/Documents/Development/GitHub/Neural-Networks/Backpropagating-Networks"
@@ -71,6 +71,7 @@ pathForTestingSet_3 = baseDirectoryForProject + "/data/letters/data-testing_set_
 
 # ---------------------------------------------- Training Data Loading ------------------------------------------------
 
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Loading Training Data..." + "" )
 
 #   Load the training data for the letter A, and get back an array with target values (y) and feature matrix (X).
@@ -91,6 +92,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #
 #   Load the test datasets.
 #
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Loading Testing data..." + "" )
 
 #   Read-in the data for the testing sets
@@ -110,35 +112,56 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #
 #   The following section trains a Multi Layered Perceptron (MLP) with the standard Backpropagation algorithm.
 #
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation..." + "" )
 
 
 
 
 
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 # --------------------------------------------- Backpropagation with Momemtum -----------------------------------------
 #
 #   The following section trains a Multi Layered Perceptron (MLP) with the Backpropagation  plus momemtum algorithm.
 #
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation with Momemtum..." + "" )
 
 
 
 
 
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 # ------------------------------------------- Backpropagation with Nguyen-Widrow --------------------------------------
 #
 #   The following section trains a Multi Layered Perceptron (MLP) with Backpropagation and Nguyen-Widrow initialization
 #   algorithm, but with no momemtum.
 #
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation with Nguyen-Widrow..." + "" )
 
 
+
+
+
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 # -------------------------------------- Backpropagation with Momemtum and Nguyen-Widrow ------------------------------
 #
 #   The following section trains a Multi Layered Perceptron (MLP) with Backpropagation and Momemtum, along with the
 #   Nguyen-Widrow initialization algorithm.
 #
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation with Momemtum and Nguyen-Widrow..." + "" )
+
+
+
 
 
 # ----------------------------------------------------------- End -----------------------------------------------------
