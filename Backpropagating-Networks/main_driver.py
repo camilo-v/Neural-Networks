@@ -40,8 +40,6 @@ import os
 import sys
 import matplotlib.pyplot as plt
 import pandas as pd
-import numpy as np
-from scipy.special import expit
 import time
 
 #   Custom Modules
