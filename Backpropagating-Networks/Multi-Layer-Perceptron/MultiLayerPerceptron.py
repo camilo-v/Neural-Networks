@@ -3,11 +3,12 @@
 # ---------------------------------------------------------------------------------------------------------------------
 #
 #                                        Bioinformatics Research Group
-# 									        http://biorg.cis.fiu.edu/
+#                                           http://biorg.cis.fiu.edu/
 #                             			Florida International University
 #
 #   This software is a "Camilo Valdes Work" under the terms of the United States Copyright Act.
-#   Please cite the author(s) in any work or product based on this material.
+#   Please cite the author(s) in any work or product based on this material.  MLP code is based on the code of
+#   Sebastian Raschka at https://github.com/rasbt/python-machine-learning-book/blob/master/code/ch12/ch12.ipynb.
 #
 #   OBJECTIVE:
 #   The purpose of this program is implement the basic Multi-Layered Perceptron algorithm.
