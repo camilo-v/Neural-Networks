@@ -16,7 +16,7 @@
 #
 #   DEPENDENCIES:
 #
-#       • somePythonModule (http://url_for_module.org)
+#       • Standard python libraries.
 #
 #   The above libraries & modules are required. You can check the modules currently installed in your
 #   system by running: python -c "help('modules')"
