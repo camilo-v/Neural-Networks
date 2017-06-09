@@ -66,10 +66,8 @@ class MultiLayerPerceptron( object ):
         cost_ (list): Sum of Squared Errors (SSE) for a given epoch.
     """
 
-    def __init__( self, n_output, n_features, n_hidden=30,
-                  l1=0.0, l2=0.0, epochs=500, eta=0.001,
-                  alpha=0.0, decrease_const=0.0, shuffle=True,
-                  minibatches=1, random_state=None ):
+    def __init__( self, n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0,
+                  decrease_const=0.0, shuffle=True, minibatches=1, random_state=None ):
 
         np.random.seed(random_state)
         self.n_output = n_output
