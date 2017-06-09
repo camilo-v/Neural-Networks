@@ -169,3 +169,142 @@ class MultiLayerPerceptron( object ):
             raise AttributeError('`how` must be set to `column` or `row`')
 
         return X_new
+
+    def _feedforward(self, X, w1, w2):
+        """
+        Calculates a feedforward step for the network.
+        Args:
+            X (array): Input layer with original features, has shape [n_samples, n_features].
+            w1 (array): Weight matrix for input layer to hidden layer [n_hidden_units, n_features].
+            w2 (array): Weight matrix for hidden layer to output layer [n_output_units, n_hidden_units].
+
+        Returns:
+            a1 (array): Input values with biast unit [n_samples, n_features].
+            z2 (array): Net input of hidden layer [n_hidden, n_samples].
+            a2 (array): Activation of hidden layer [n_hidden + 1, n_samples].
+            z3 (array): Net input of hidden layer [n_output_units, n_samples].
+            a3 (array): Activation of output layer [n_output_units, n_samples].
+        """
+
+        a1 = self._add_bias_unit(X, how='column')
+        z2 = w1.dot(a1.T)
+        a2 = self._sigmoid(z2)
+        a2 = self._add_bias_unit(a2, how='row')
+        z3 = w2.dot(a2)
+        a3 = self._sigmoid(z3)
+
+        return a1, z2, a2, z3, a3
+
+    def _L2_reg(self, lambda_, w1, w2):
+        """
+        Computes the L2 Regularization cost.
+        Args:
+            lambda_:
+            w1:
+            w2:
+
+        Returns:
+
+        """
+
+        return (lambda_ / 2.0) * (np.sum( w1[:, 1:] ** 2 ) + np.sum( w2[:, 1:] ** 2 ))
+
+    def _L1_reg(self, lambda_, w1, w2):
+        """
+        Computes the L1 Regularization cost.
+        Args:
+            lambda_:
+            w1:
+            w2:
+
+        Returns:
+
+        """
+
+        return (lambda_ / 2.0) * (np.abs( w1[:, 1:] ).sum() + np.abs( w2[:, 1:] ).sum())
+
+    def _get_cost(self, y_enc, output, w1, w2):
+        """
+        Calculates the cost function.
+        Args:
+            y_enc:  "One-Hot" encoded class labels for target, t.
+            output: Activation of the output layer (feedforward)
+            w1: Weight matrix for input layer to hidden layer.
+            w2: Weight matrix for hidden layer to output layer.
+
+        Returns:
+            cost (float) The regularized cost.
+        """
+
+        term1 = -y_enc * (np.log( output ))
+        term2 = (1.0 - y_enc) * np.log( 1.0 - output )
+        cost = np.sum( term1 - term2 )
+        L1_term = self._L1_reg( self.l1, w1, w2 )
+        L2_term = self._L2_reg( self.l2, w1, w2 )
+        cost = cost + L1_term + L2_term
+
+        return cost
+
+    def _get_gradient(self, a1, a2, a3, z2, Y_enc, w1, w2):
+        """
+        Computes the gradient step using the backpropagation algorithm.
+        Args:
+            a1 (array): Input values with bias unit.
+            a2 (array): Activation of hidden layer.
+            a3 (array): Activation of output layer.
+            z2 (array): Net input of hidden layer.
+            Y_enc (array): "One-Hot" encoded class labels for target, t.
+            w1 (array): Weight matrix for input layer to hidden layer.
+            w2 (array): Weight matrix for hidden layer to output layer.
+
+        Returns:
+            grad1 (array) Gradient of the weight matrix w1, has shape [n_hidden_units, n_features].
+            grad2 (array) Gradient of the weight matrix w2, has shape [n_output_units, n_hidden_units].
+        """
+
+        #   Backpropagation
+        sigma3 = a3 - y_enc
+        z2 = self._add_bias_unit( z2, how='row' )
+        sigma2 = w2.T.dot( sigma3 ) * self._sigmoid_gradient( z2 )
+        sigma2 = sigma2[1:, :]
+        grad1 = sigma2.dot( a1 )
+        grad2 = sigma3.dot( a2.T )
+
+        #   Regularization
+        grad1[:, 1:] += self.l2 * w1[:, 1:]
+        grad1[:, 1:] += self.l1 * np.sign( w1[:, 1:] )
+        grad2[:, 1:] += self.l2 * w2[:, 1:]
+        grad2[:, 1:] += self.l1 * np.sign( w2[:, 1:] )
+
+    def predict(self, X):
+        """
+        Prediction function for class labels.
+        Args:
+            X: Input layer with original features, has shape [n_samples, n_features].
+
+        Returns:
+            y_pred (array) Predicted class labels, has shape [n_samples].
+        """
+
+        if len( X.shape ) != 2:
+            raise AttributeError( 'X must be a [n_samples, n_features] array.\n'
+                                  'Use X[:,None] for 1-feature classification,'
+                                  '\nor X[[i]] for 1-sample classification' )
+
+        a1, z2, a2, z3, a3 = self._feedforward( X, self.w1, self.w2 )
+
+        y_pred = np.argmax( z3, axis=0 )
+
+        return y_pred
+
+    def fit(self, X, y, print_progress=False):
+        """
+        Training function for learning the weights from the training dataset.
+        Args:
+            X (array): Input layer with original features, has shape [n_samples, n_features].
+            y (array): Target class labels from training data, has shape [n_samples].
+            print_progress (bool): Flag for printing the progress through the epochs.
+
+        Returns:
+
+        """
