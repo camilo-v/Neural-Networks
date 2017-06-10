@@ -245,17 +245,17 @@ class MultiLayerPerceptron( object ):
 
         return cost
 
-    def _get_gradient(self, a1, a2, a3, z2, Y_enc, w1, w2):
+    def _get_gradient(self, a1, a2, a3, z2, y_enc, w1, w2):
         """
         Computes the gradient step using the backpropagation algorithm.
         Args:
-            a1 (array): Input values with bias unit.
-            a2 (array): Activation of hidden layer.
-            a3 (array): Activation of output layer.
-            z2 (array): Net input of hidden layer.
-            Y_enc (array): "One-Hot" encoded class labels for target, t.
-            w1 (array): Weight matrix for input layer to hidden layer.
-            w2 (array): Weight matrix for hidden layer to output layer.
+            a1: Input values with bias unit.
+            a2: Activation of hidden layer.
+            a3: Activation of output layer.
+            z2: Net input of hidden layer.
+            y_enc: "One-Hot" encoded class labels for target, t.
+            w1: Weight matrix for input layer to hidden layer.
+            w2: Weight matrix for hidden layer to output layer.
 
         Returns:
             grad1 (array) Gradient of the weight matrix w1, has shape [n_hidden_units, n_features].
@@ -275,6 +275,9 @@ class MultiLayerPerceptron( object ):
         grad1[:, 1:] += self.l1 * np.sign( w1[:, 1:] )
         grad2[:, 1:] += self.l2 * w2[:, 1:]
         grad2[:, 1:] += self.l1 * np.sign( w2[:, 1:] )
+
+        return grad1, grad2
+
 
     def predict(self, X):
         """
@@ -323,7 +326,7 @@ class MultiLayerPerceptron( object ):
             self.eta /= (1 + self.decrease_const * i)
 
             if print_progress:
-                sys.stderr.write( '\rEpoch: %d/%d' % (i + 1, self.epochs) )
+                sys.stderr.write( '\nEpoch: %d/%d' % (i + 1, self.epochs) )
                 sys.stderr.flush()
 
             if self.shuffle:
