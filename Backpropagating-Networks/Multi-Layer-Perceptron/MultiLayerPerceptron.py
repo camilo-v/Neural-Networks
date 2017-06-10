@@ -56,7 +56,7 @@ class MultiLayerPerceptron( object ):
         l2 (float): Lambda value for L2-regularization. Set to 0.0 to disable.
         epochs (int): Number of epochs to run through the training dataset.
         eta (float): Learning Rate.
-        alpha (float): Momemtum Constant.  This is the multiplicative factor for gradient descent.
+        alpha (float): Momentum Constant.  This is the multiplicative factor for gradient descent.
         decrease_const (float): Shrinks the learning rate after each epoch.
         shuffle (bool): If set to true, will shuffle the training dataset at each epoch to prevent cycles.
         minibatches (int): Divides training data into k minibranches for computational efficiency.
@@ -306,5 +306,57 @@ class MultiLayerPerceptron( object ):
             print_progress (bool): Flag for printing the progress through the epochs.
 
         Returns:
-
+            Fitted values in a self object.
         """
+
+        self.cost_ = []
+
+        X_data, y_data = X.copy(), y.copy()
+        y_enc = self._encode_labels( y, self.n_output )
+
+        delta_w1_prev = np.zeros( self.w1.shape )
+        delta_w2_prev = np.zeros( self.w2.shape )
+
+        for i in range( self.epochs ):
+
+            #   Learning rate
+            self.eta /= (1 + self.decrease_const * i)
+
+            if print_progress:
+                sys.stderr.write( '\rEpoch: %d/%d' % (i + 1, self.epochs) )
+                sys.stderr.flush()
+
+            if self.shuffle:
+                idx = np.random.permutation( y_data.shape[0] )
+                X_data, y_enc = X_data[idx], y_enc[:, idx]
+
+            mini = np.array_split( range( y_data.shape[0] ), self.minibatches )
+
+            for idx in mini:
+                # feedforward
+                a1, z2, a2, z3, a3 = self._feedforward( X_data[idx],
+                                                        self.w1,
+                                                        self.w2 )
+                cost = self._get_cost( y_enc=y_enc[:, idx],
+                                       output=a3,
+                                       w1=self.w1,
+                                       w2=self.w2 )
+
+                self.cost_.append( cost )
+
+                #   Compute gradient via Backpropagation
+                grad1, grad2 = self._get_gradient( a1=a1, a2=a2,
+                                                   a3=a3, z2=z2,
+                                                   y_enc=y_enc[:, idx],
+                                                   w1=self.w1,
+                                                   w2=self.w2 )
+
+                delta_w1, delta_w2 = self.eta * grad1, self.eta * grad2
+
+                self.w1 -= (delta_w1 + (self.alpha * delta_w1_prev))
+                self.w2 -= (delta_w2 + (self.alpha * delta_w2_prev))
+
+                delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
+
+        return self
+
