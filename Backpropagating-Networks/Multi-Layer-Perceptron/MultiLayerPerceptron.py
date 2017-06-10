@@ -312,6 +312,7 @@ class MultiLayerPerceptron( object ):
             Fitted values in a self object.
         """
 
+        #   Retains the cost for each epoch so we can plot it later.
         self.cost_ = []
 
         X_data, y_data = X.copy(), y.copy()
