@@ -47,6 +47,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), ''))
 sys.path.append(os.path.join(os.path.dirname(__file__), 'Multi-Layer-Perceptron'))
 
 import utility_functions as uf
+import MultiLayerPerceptron as mlp
+
 
 # ------------------------------------------------------ Main ---------------------------------------------------------
 #
@@ -114,24 +116,86 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] -------
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation..." + "" )
 
 
+#
+#   Initialize the Multi-Layered Perceptron object.
+#
 
+momentumConstant = 1
+numberOfEpochs = 500
 
+nn = mlp.MultiLayerPerceptron(  n_output=10,
+                                n_features=df_X.shape[1],
+                                n_hidden=50,
+                                l2=0.1,
+                                l1=0.0,
+                                epochs=numberOfEpochs,
+                                eta=0.001,
+                                alpha=momentumConstant,
+                                decrease_const=0.00001,
+                                minibatches=10,
+                                shuffle=True,
+                                random_state=1 )
+
+#   Fit the training data using the initialized MLP object.
+nn.fit( df_X, df_y, print_progress=True)
+
+#   Diagnostic plots
+plt.plot(range(len(nn.cost_)), nn.cost_)
+plt.ylim([0, 75])
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.tight_layout()
+plt.title('Backpropagation')
+
+plt.show()
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
+
 # --------------------------------------------- Backpropagation with Momemtum -----------------------------------------
 #
-#   The following section trains a Multi Layered Perceptron (MLP) with the Backpropagation  plus momemtum algorithm.
+#      The following section trains a Multi Layered Perceptron (MLP) with the Backpropagation  plus momemtum algorithm.
 #
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] ----------------------------------" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation with Momemtum..." + "" )
 
 
+#
+#   Initialize the Multi-Layered Perceptron object.
+#
+
+momentumConstant2 = 0.001
+numberOfEpochs2 = 500
+
+nn_2 = mlp.MultiLayerPerceptron(    n_output=10,
+                                    n_features=df_X.shape[1],
+                                    n_hidden=50,
+                                    l2=0.1,
+                                    l1=0.0,
+                                    epochs=numberOfEpochs2,
+                                    eta=0.001,
+                                    alpha=momentumConstant2,
+                                    decrease_const=0.00001,
+                                    minibatches=10,
+                                    shuffle=True,
+                                    random_state=1 )
+
+#   Fit the training data using the initialized MLP object.
+nn_2.fit( df_X, df_y, print_progress=True)
+
+#   Diagnostic plots
+plt.plot(range(len(nn_2.cost_)), nn_2.cost_)
+plt.ylim([0, 75])
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.tight_layout()
+plt.title('Backpropagation with Momentum = ' + str(momentumConstant2))
+
+plt.show()
 
 
 
-
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+print( "\n[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 # ------------------------------------------- Backpropagation with Nguyen-Widrow --------------------------------------
 #
