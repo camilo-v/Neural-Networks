@@ -67,7 +67,7 @@ class MultiLayerPerceptron( object ):
     """
 
     def __init__( self, n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0,
-                  decrease_const=0.0, shuffle=True, minibatches=1, random_state=None, useNW=False ):
+                  decrease_const=0.0, shuffle=True, minibatches=1, random_state=None, useNguyenWidrow=False ):
 
         np.random.seed(random_state)
         self.n_output = n_output
@@ -77,7 +77,7 @@ class MultiLayerPerceptron( object ):
         #   Initialize the weights in a default manner
         self.w1, self.w2 = self._initialize_weights()
 
-        if useNW:
+        if useNguyenWidrow:
             #   Use Nguyen-Widrow Weight Initialization scheme
             print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ]" +
                    " Initializing with NGuyen-Widrow")
