@@ -88,8 +88,8 @@ class MultiLayerPerceptron( object ):
         """
         Encode the class labels into a "one-hot" representation vector.
         Args:
-            y (array): Array of target values with dimensions [n_samples]
-            k:
+            y: Array of target values with dimensions [n_samples].
+            k: Number of output units to encode the labels into.
 
         Returns:
             onehot A tuple with array and shape dimensions (n_labels, n_samples)
@@ -238,9 +238,12 @@ class MultiLayerPerceptron( object ):
 
         term1 = -y_enc * (np.log( output ))
         term2 = (1.0 - y_enc) * np.log( 1.0 - output )
+
         cost = np.sum( term1 - term2 )
+
         L1_term = self._L1_reg( self.l1, w1, w2 )
         L2_term = self._L2_reg( self.l2, w1, w2 )
+
         cost = cost + L1_term + L2_term
 
         return cost
@@ -316,6 +319,8 @@ class MultiLayerPerceptron( object ):
         self.cost_ = []
 
         X_data, y_data = X.copy(), y.copy()
+
+        #   Encode the target labels for the number of output units.
         y_enc = self._encode_labels( y, self.n_output )
 
         delta_w1_prev = np.zeros( self.w1.shape )
@@ -326,9 +331,9 @@ class MultiLayerPerceptron( object ):
             #   Learning rate
             self.eta /= (1 + self.decrease_const * i)
 
-            if print_progress:
-                sys.stderr.write( '\nEpoch: %d/%d' % (i + 1, self.epochs) )
-                sys.stderr.flush()
+            # if print_progress:
+            #     sys.stderr.write( '\nEpoch: %d/%d' % (i + 1, self.epochs) )
+            #     sys.stderr.flush()
 
             if self.shuffle:
                 idx = np.random.permutation( y_data.shape[0] )
@@ -337,10 +342,13 @@ class MultiLayerPerceptron( object ):
             mini = np.array_split( range( y_data.shape[0] ), self.minibatches )
 
             for idx in mini:
-                # feedforward
+
+                #   Feedforward
+                #   Take a step forward in the network.
                 a1, z2, a2, z3, a3 = self._feedforward( X_data[idx],
                                                         self.w1,
                                                         self.w2 )
+
                 cost = self._get_cost( y_enc=y_enc[:, idx],
                                        output=a3,
                                        w1=self.w1,
