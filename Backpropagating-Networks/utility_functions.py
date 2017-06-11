@@ -57,8 +57,6 @@ def readTrainingData(filePath):
     w, h = 20, 25
     featureMatrix_X = [[0 for x in range( w )] for y in range( h )]
 
-    # ------------------------------------------ Training Data Loading ------------------------------------------------
-
     patternNumber = 0
 
     with open( filePathForInputFile, 'r' ) as INFILE:
@@ -108,11 +106,12 @@ def readTestingData(filePath):
 
     filePathForInputFile = filePath
 
+    #   Array with target values for testing set.
+    targetValues_y = []
+
     #   Create a feature matrix
     w, h = 20, 25
     featureMatrix_X = [[0 for x in range( w )] for y in range( h )]
-
-    # ------------------------------------------ Training Data Loading ------------------------------------------------
 
     patternNumber = 0
 
@@ -127,15 +126,26 @@ def readTestingData(filePath):
                     # print( "\nComment. Starting new letter recognition..." )
                     continue
                 else:
+                    patternArray = []
+                    patternLabel = ""
 
                     for (index, valueOfCell) in enumerate( row_line ):
 
                         if index != (len( row_line ) - 1):
+                            patternArray.append( int( valueOfCell ) )
                             featureMatrix_X[patternNumber][index] = int( valueOfCell )
+
+                        if index == (len( row_line ) - 1):
+                            patternLabel = int( valueOfCell )
+
+                    # print( patternArray )
+                    # print( patternLabel )
+
+                    targetValues_y.append( patternLabel )
 
                     patternNumber += 1
 
         except csv.Error as e:
             sys.exit( "File %s, line %d: %s" % (filePathForInputFile, reader.line_num, e) )
 
-    return featureMatrix_X
+    return targetValues_y, featureMatrix_X
