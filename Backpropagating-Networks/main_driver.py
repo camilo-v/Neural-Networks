@@ -41,6 +41,7 @@ import sys
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+np.set_printoptions(linewidth=500)
 import time
 
 #   Custom Modules
@@ -148,14 +149,27 @@ nn = mlp.MultiLayerPerceptron(  n_output=5,
 #   Fit the training data using the initialized MLP object.
 nn.fit( df_X, df_y, print_progress=True)
 
+
 #   Diagnostic plots
 plt.plot(range(len(nn.cost_)), nn.cost_)
-plt.ylim([0, 100])
+plt.ylim([0, 32])
 plt.ylabel('Cost')
 plt.xlabel('Epochs')
 plt.tight_layout()
 plt.title('Backpropagation')
 plt.show()
+
+
+#  Weight Diagnostic plots
+# plt.plot(range(len(nn.cost_)), nn.cost_)
+# plt.ylim([0, 300])
+# plt.ylabel('Evolution of Weights & Bias')
+# plt.xlabel('Patterns')
+# plt.tight_layout()
+# plt.title('Backpropagation with Nguyen-Widrow & Momentum')
+# plt.show()
+
+
 
 #   Meassure the accuracy of the training step
 backpropTraining_pred = nn.predict( df_X )
@@ -394,6 +408,8 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Ba
        " Testing Set 2 Accuracy: %.2f%%" % (accuracyForBackPropWithNguyenWidrowTest3 * 100) )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+
+
 
 # -------------------------------------- Backpropagation with Momemtum and Nguyen-Widrow ------------------------------
 #
