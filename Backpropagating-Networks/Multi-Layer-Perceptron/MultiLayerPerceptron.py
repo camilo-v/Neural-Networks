@@ -77,7 +77,7 @@ class MultiLayerPerceptron( object ):
 
         self.useNguyenWidrow = useNguyenWidrow
 
-        #   Initialize the weights in a default manner
+        #   Initialize the weights
         self.w1, self.w2 = self._initialize_weights()
 
         self.l1 = l1
@@ -410,6 +410,12 @@ class MultiLayerPerceptron( object ):
                     self.w2 -= delta_w2
 
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
+
+        # Print the final set of weights
+
+        print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ] Final Weights:" )
+        print(str(self.w1))
+        print(str(self.w2))
 
         return self
 
