@@ -285,6 +285,7 @@ class MultiLayerPerceptron( object ):
 
         return cost
 
+
     def _get_gradient(self, a1, a2, a3, z2, y_enc, w1, w2):
         """
         Computes the gradient step using the backpropagation algorithm.
@@ -413,9 +414,7 @@ class MultiLayerPerceptron( object ):
 
         # Print the final set of weights
 
-        print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ] Final Weights:" )
-        print(str(self.w1))
-        print(str(self.w2))
+
 
         return self
 
