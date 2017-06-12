@@ -131,7 +131,7 @@ momentumConstant = 1    # Not used in this step, but required for the constructo
 numberOfEpochs = 1000
 numberOfHiddenUnits = 25
 
-nn = mlp.MultiLayerPerceptron(  n_output=5,
+nn = mlp.MultiLayerPerceptron(  n_output=3,
                                 n_features=df_X.shape[1],
                                 n_hidden=numberOfHiddenUnits,
                                 l2=0.1,
@@ -144,7 +144,9 @@ nn = mlp.MultiLayerPerceptron(  n_output=5,
                                 shuffle=True,
                                 random_state=1,
                                 useMomentum=False,
-                                useNguyenWidrow=False )
+                                useNguyenWidrow=False,
+                                destroyWeights=True,
+                                destroyAmount=40 )
 
 #   Fit the training data using the initialized MLP object.
 nn.fit( df_X, df_y, print_progress=True)
@@ -152,13 +154,12 @@ nn.fit( df_X, df_y, print_progress=True)
 
 #   Diagnostic plots
 plt.plot(range(len(nn.cost_)), nn.cost_)
-plt.ylim([0, 32])
+plt.ylim([0, 100])
 plt.ylabel('Cost')
 plt.xlabel('Epochs')
 plt.tight_layout()
 plt.title('Backpropagation')
 plt.show()
-
 
 #  Weight Diagnostic plots
 # plt.plot(range(len(nn.cost_)), nn.cost_)
@@ -168,7 +169,6 @@ plt.show()
 # plt.tight_layout()
 # plt.title('Backpropagation with Nguyen-Widrow & Momentum')
 # plt.show()
-
 
 
 #   Meassure the accuracy of the training step
@@ -215,7 +215,6 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Ba
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 
-
 # --------------------------------------------- Backpropagation with Momemtum -----------------------------------------
 #
 #      The following section trains a Multi Layered Perceptron (MLP) with the Backpropagation  plus momemtum algorithm.
@@ -232,7 +231,7 @@ momentumConstant2 = 0.9
 numberOfEpochs2 = 1000
 numberOfHiddenUnits2 = 25
 
-nn_2 = mlp.MultiLayerPerceptron(    n_output=5,
+nn_2 = mlp.MultiLayerPerceptron(    n_output=3,
                                     n_features=df_X.shape[1],
                                     n_hidden=numberOfHiddenUnits2,
                                     l2=0.1,
@@ -245,7 +244,9 @@ nn_2 = mlp.MultiLayerPerceptron(    n_output=5,
                                     shuffle=True,
                                     random_state=1,
                                     useMomentum=True,
-                                    useNguyenWidrow=False )
+                                    useNguyenWidrow=False,
+                                    destroyWeights=True,
+                                    destroyAmount=40 )
 
 #   Fit the training data using the initialized MLP object.
 nn_2.fit( df_X, df_y, print_progress=True)
@@ -330,7 +331,7 @@ momentumConstant3 = 1   #   As before, set but not used.
 numberOfEpoch3 = 1000
 numberOfHiddenUnits3 = 25
 
-nn_3 = mlp.MultiLayerPerceptron(    n_output=5,
+nn_3 = mlp.MultiLayerPerceptron(    n_output=3,
                                     n_features=df_X.shape[1],
                                     n_hidden=numberOfHiddenUnits3,
                                     l2=0.1,
@@ -343,7 +344,9 @@ nn_3 = mlp.MultiLayerPerceptron(    n_output=5,
                                     shuffle=True,
                                     random_state=1,
                                     useMomentum=False,
-                                    useNguyenWidrow=True )
+                                    useNguyenWidrow=True,
+                                    destroyWeights=True,
+                                    destroyAmount=40 )
 
 #   Fit the training data using the initialized MLP object.
 nn_3.fit( df_X, df_y, print_progress=True)
@@ -425,7 +428,7 @@ momentumConstant4 = 0.9
 numberOfEpoch4 = 1000
 numberOfHiddenUnits4 = 25
 
-nn_4 = mlp.MultiLayerPerceptron(    n_output=5,
+nn_4 = mlp.MultiLayerPerceptron(    n_output=3,
                                     n_features=df_X.shape[1],
                                     n_hidden=numberOfHiddenUnits3,
                                     l2=0.1,
@@ -438,7 +441,9 @@ nn_4 = mlp.MultiLayerPerceptron(    n_output=5,
                                     shuffle=True,
                                     random_state=1,
                                     useMomentum=True,
-                                    useNguyenWidrow=True )
+                                    useNguyenWidrow=True,
+                                    destroyWeights=True,
+                                    destroyAmount=40 )
 
 #   Fit the training data using the initialized MLP object.
 nn_4.fit( df_X, df_y, print_progress=True)
