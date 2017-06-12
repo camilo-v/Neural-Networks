@@ -60,7 +60,9 @@ class MultiLayerPerceptron( object ):
         decrease_const (float): Shrinks the learning rate after each epoch.
         shuffle (bool): If set to true, will shuffle the training dataset at each epoch to prevent cycles.
         minibatches (int): Divides training data into k minibranches for computational efficiency.
-        random_state (int): Random initialization for shuffling and setting the weights
+        random_state (int): Random initialization for shuffling and setting the weights.
+        destroyWeights (bool): Flag for Fault Tolerance trials.
+        destroyAmount (int): Amount to destroy weights by.
 
     Attributes:
         cost_ (list): Sum of Squared Errors (SSE) for a given epoch.
@@ -68,7 +70,7 @@ class MultiLayerPerceptron( object ):
 
     def __init__( self, n_output, n_features, n_hidden=30, l1=0.0, l2=0.0, epochs=500, eta=0.001, alpha=0.0,
                   decrease_const=0.0, shuffle=True, minibatches=1, random_state=None, useNguyenWidrow=False,
-                  useMomentum=False ):
+                  useMomentum=False, destroyWeights=False, destroyAmount=0 ):
 
         np.random.seed(random_state)
         self.n_output = n_output
@@ -95,6 +97,11 @@ class MultiLayerPerceptron( object ):
         self.decrease_const = decrease_const
         self.shuffle = shuffle
         self.minibatches = minibatches
+
+        #   Flags for Fault Tolerance Trials.  When each is set, it destroys (sets to zero) 20% or 40% of the
+        #   weights
+        self.destroyWeights = destroyWeights
+        self.destroyAmount = destroyAmount
 
 
     def _encode_labels( self, y, k):
@@ -413,7 +420,32 @@ class MultiLayerPerceptron( object ):
                 delta_w1_prev, delta_w2_prev = delta_w1, delta_w2
 
         # Print the final set of weights
+        # print(str(self.w1))
+        # print(str(self.w2))
 
+        if self.destroyWeights:
+
+            probabilityLow = float(self.destroyAmount / 100)
+            probabilityHigh = float(1 - probabilityLow)
+
+            print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ]" + " Destroying Weights by: " +
+                   "" + str(self.destroyAmount) + "% of " + str(self.w2.size) +
+                   ", probabilities[" + str(probabilityLow) + ", " + str(probabilityHigh) + "]")
+
+            #   Boolean mask that will flag the array locations to destroy.  Locations are selected based on a
+            #   discrete uniform distribution.
+            maskForW1 = (np.random.choice( [0, 1], size=self.w1.shape, p=[probabilityLow, probabilityHigh] )).astype( np.bool )
+            maskForW2 = (np.random.choice( [0, 1], size=self.w2.shape, p=[probabilityLow, probabilityHigh] )).astype( np.bool )
+
+            print(str(maskForW2))
+
+            #   Set a zero-filled matrix the same shape of the weights we are trying to change
+            randomW1Matrix = np.zeros( self.w1.shape ) * np.max( self.w1 )
+            randomW2Matrix = np.zeros( self.w2.shape ) * np.max( self.w2 )
+
+            #   Use the masks to replace the values in the weight arrays.
+            self.w1[maskForW1] = randomW1Matrix[maskForW1]
+            self.w2[maskForW2] = randomW2Matrix[maskForW2]
 
 
         return self
