@@ -75,13 +75,10 @@ class MultiLayerPerceptron( object ):
         self.n_features = n_features
         self.n_hidden = n_hidden
 
+        self.useNguyenWidrow = useNguyenWidrow
+
         #   Initialize the weights in a default manner
         self.w1, self.w2 = self._initialize_weights()
-
-        if useNguyenWidrow:
-            #   Use Nguyen-Widrow Weight Initialization scheme
-            print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ]" +
-                   " Initializing with NGuyen-Widrow...")
 
         self.l1 = l1
         self.l2 = l2
@@ -126,11 +123,35 @@ class MultiLayerPerceptron( object ):
             w1, w2
         """
 
-        w1 = np.random.uniform(-1.0, 1.0, size=self.n_hidden*(self.n_features + 1))
-        w1 = w1.reshape(self.n_hidden, self.n_features + 1)
+        weightInitMin = -1.0
+        weightInitMax = 1.0
 
-        w2 = np.random.uniform(-1.0, 1.0, size=self.n_output*(self.n_hidden + 1))
-        w2 = w2.reshape(self.n_output, self.n_hidden + 1)
+        #   Beta term for Nguyen-Widrow is calculated as Beta = 0.7 * ( p ^ ( 1/n ) ) )
+        #   Where p = number of hidden units
+        #         n = number of input units
+        numberOfHiddenUnits = self.n_hidden
+        numberOfInputUnits = self.n_features
+
+        beta = 0.7 * numberOfHiddenUnits ** (1. / numberOfInputUnits)
+
+        #   Use Nguyen-Widrow Weight Initialization scheme
+        if self.useNguyenWidrow:
+            weightInitMin = -beta
+            weightInitMax = beta
+
+            print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() ) + " ]" +
+                   "   Initializing with NGuyen-Widrow Beta: " + str( beta ) + ", (" + str(weightInitMin) + ", " +
+                   str(weightInitMax) + ")" )
+
+        #
+        #   Initialize the weights.. either with the default values in range (-1.0, 1.0) or with scaled
+        #   Nguyen-Widrow.
+        #
+        w1 = np.random.uniform( weightInitMin, weightInitMax, size=self.n_hidden * (self.n_features + 1) )
+        w1 = w1.reshape( self.n_hidden, self.n_features + 1 )
+
+        w2 = np.random.uniform( weightInitMin, weightInitMax, size=self.n_output * (self.n_hidden + 1) )
+        w2 = w2.reshape( self.n_output, self.n_hidden + 1 )
 
         return w1, w2
 
