@@ -437,8 +437,6 @@ class MultiLayerPerceptron( object ):
             maskForW1 = (np.random.choice( [0, 1], size=self.w1.shape, p=[probabilityLow, probabilityHigh] )).astype( np.bool )
             maskForW2 = (np.random.choice( [0, 1], size=self.w2.shape, p=[probabilityLow, probabilityHigh] )).astype( np.bool )
 
-            print(str(maskForW2))
-
             #   Set a zero-filled matrix the same shape of the weights we are trying to change
             randomW1Matrix = np.zeros( self.w1.shape ) * np.max( self.w1 )
             randomW2Matrix = np.zeros( self.w2.shape ) * np.max( self.w2 )
