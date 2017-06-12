@@ -126,7 +126,7 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Ba
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation, Training MLP..." + "" )
 
-momentumConstant = 1
+momentumConstant = 1    # Not used in this step, but required for the constructor.
 numberOfEpochs = 1000
 numberOfHiddenUnits = 25
 
@@ -142,6 +142,7 @@ nn = mlp.MultiLayerPerceptron(  n_output=5,
                                 minibatches=1,
                                 shuffle=True,
                                 random_state=1,
+                                useMomentum=False,
                                 useNguyenWidrow=False )
 
 #   Fit the training data using the initialized MLP object.
@@ -210,16 +211,16 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Ba
 
 
 #
-#   Initialize the Multi-Layered Perceptron object.
+#   Initialize the Multi-Layered Perceptron object for use with Momentum by setting the flag "useMomentum" to True.
 #
 
-momentumConstant2 = 0.001
+momentumConstant2 = 0.9
 numberOfEpochs2 = 1000
-numberOfHiddenUnits = 25
+numberOfHiddenUnits2 = 25
 
 nn_2 = mlp.MultiLayerPerceptron(    n_output=5,
                                     n_features=df_X.shape[1],
-                                    n_hidden=numberOfHiddenUnits,
+                                    n_hidden=numberOfHiddenUnits2,
                                     l2=0.1,
                                     l1=0.0,
                                     epochs=numberOfEpochs2,
@@ -229,6 +230,7 @@ nn_2 = mlp.MultiLayerPerceptron(    n_output=5,
                                     minibatches=1,
                                     shuffle=True,
                                     random_state=1,
+                                    useMomentum=True,
                                     useNguyenWidrow = False )
 
 #   Fit the training data using the initialized MLP object.
@@ -236,7 +238,7 @@ nn_2.fit( df_X, df_y, print_progress=True)
 
 #   Diagnostic plots
 plt.plot(range(len(nn_2.cost_)), nn_2.cost_)
-plt.ylim([0, 40])
+plt.ylim([0, 100])
 plt.ylabel('Cost')
 plt.xlabel('Epochs')
 plt.tight_layout()
@@ -257,10 +259,12 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 #
 #   Test the trained MLP with the testing datasets for Backpropagation with Momentum.
 #
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum, Testing Set 1..." + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Momentum, Testing Set 1..." + "" )
 
 backpropWithMomentumTest1_pred = nn_2.predict( df_testingSet_1_X )
-accuracyForBackPropWithMomentumTest1 = (np.sum(df_testingSet_1_y.T == backpropWithMomentumTest1_pred) / df_testingSet_1_X.shape[0])
+accuracyForBackPropWithMomentumTest1 = (np.sum(df_testingSet_1_y.T == backpropWithMomentumTest1_pred) /
+                                        df_testingSet_1_X.shape[0])
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum" +
        " Testing Set 1 Accuracy: %.2f%%" % (accuracyForBackPropWithMomentumTest1 * 100) )
@@ -268,20 +272,24 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Ba
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum, Testing Set 2..." + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Momentum, Testing Set 2..." + "" )
 
 backpropWithMomentumTest2_pred = nn_2.predict( df_testingSet_2_X )
-accuracyForBackPropWithMomentumTest2 = (np.sum(df_testingSet_2_y.T == backpropWithMomentumTest2_pred) / df_testingSet_2_X.shape[0])
+accuracyForBackPropWithMomentumTest2 = (np.sum(df_testingSet_2_y.T == backpropWithMomentumTest2_pred) /
+                                        df_testingSet_2_X.shape[0])
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum" +
        " Testing Set 2 Accuracy: %.2f%%" % (accuracyForBackPropWithMomentumTest2 * 100) )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum, Testing Set 3..." + "" )
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Momentum, Testing Set 3..." + "" )
 
 backpropWithMomentumTest3_pred = nn_2.predict( df_testingSet_3_X )
-accuracyForBackPropWithMomentumTest3 = (np.sum(df_testingSet_3_y.T == backpropWithMomentumTest3_pred) / df_testingSet_3_X.shape[0])
+accuracyForBackPropWithMomentumTest3 = (np.sum(df_testingSet_3_y.T == backpropWithMomentumTest3_pred) /
+                                        df_testingSet_3_X.shape[0])
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum" +
        " Testing Set 2 Accuracy: %.2f%%" % (accuracyForBackPropWithMomentumTest3 * 100) )
@@ -299,10 +307,91 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] -------
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
        " Backpropagation with Nguyen-Widrow..." + "" )
 
+#
+#   Initialize the Multi-Layered Perceptron object for use with Nguyen-Widrow initialization by setting the flag
+#   "useNguyenWidrow" to True.  Note that here we do not use Momentum, so we set "useMomentum" to False.
+#
+
+momentumConstant3 = 0.9
+numberOfEpoch3 = 1000
+numberOfHiddenUnits3 = 25
+
+nn_3 = mlp.MultiLayerPerceptron(    n_output=5,
+                                    n_features=df_X.shape[1],
+                                    n_hidden=numberOfHiddenUnits3,
+                                    l2=0.1,
+                                    l1=0.0,
+                                    epochs=numberOfEpoch3,
+                                    eta=0.001,
+                                    alpha=momentumConstant3,
+                                    decrease_const=0.00001,
+                                    minibatches=1,
+                                    shuffle=True,
+                                    random_state=1,
+                                    useMomentum=False,
+                                    useNguyenWidrow = True )
+
+#   Fit the training data using the initialized MLP object.
+nn_3.fit( df_X, df_y, print_progress=True)
+
+#   Diagnostic plots
+plt.plot(range(len(nn_3.cost_)), nn_3.cost_)
+plt.ylim([0, 100])
+plt.ylabel('Cost')
+plt.xlabel('Epochs')
+plt.tight_layout()
+plt.title('Backpropagation with Nguyen-Widrow')
+
+plt.show()
 
 
+#
+#   Meassure the accuracy of the training step
+backpropWithNguyenWidrowTraining_pred = nn_3.predict( df_X )
+accuracyForBackPropWithNguyenWidrowTraining = (np.sum(df_y.T == backpropWithNguyenWidrowTraining_pred) / df_X.shape[0])
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Momentum" +
+       " Training Set Accuracy: %.2f%%" % (accuracyForBackPropWithNguyenWidrowTraining * 100) )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+
+#
+#   Test the trained MLP with the testing datasets for Backpropagation with Momentum.
+#
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Nguyen-Widrow, Testing Set 1..." + "" )
+
+backpropWithNguyenWidrowTest1_pred = nn_3.predict( df_testingSet_1_X )
+accuracyForBackPropWithNguyenWidrowTest1 = (np.sum(df_testingSet_1_y.T == backpropWithNguyenWidrowTest1_pred) /
+                                            df_testingSet_1_X.shape[0])
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Nguyen-Widrow" +
+       " Testing Set 1 Accuracy: %.2f%%" % (accuracyForBackPropWithNguyenWidrowTest1 * 100) )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
 
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Nguyen-Widrow, Testing Set 2..." + "" )
+
+backpropWithNguyenWidrowTest2_pred = nn_3.predict( df_testingSet_2_X )
+accuracyForBackPropWithNguyenWidrowTest2 = (np.sum(df_testingSet_2_y.T == backpropWithNguyenWidrowTest2_pred) /
+                                            df_testingSet_2_X.shape[0])
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Nguyen-Widrow" +
+       " Testing Set 2 Accuracy: %.2f%%" % (accuracyForBackPropWithNguyenWidrowTest2 * 100) )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" +
+       " Backpropagation w/ Nguyen-Widrow, Testing Set 3..." + "" )
+
+backpropWithNguyenWidrowTest3_pred = nn_3.predict( df_testingSet_3_X )
+accuracyForBackPropWithNguyenWidrowTest3 = (np.sum(df_testingSet_3_y.T == backpropWithNguyenWidrowTest3_pred) /
+                                            df_testingSet_3_X.shape[0])
+
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" + " Backpropagation w/ Nguyen-Widrow" +
+       " Testing Set 2 Accuracy: %.2f%%" % (accuracyForBackPropWithNguyenWidrowTest3 * 100) )
 
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
