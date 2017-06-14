@@ -35,10 +35,12 @@
 #
 # ---------------------------------------------------------------------------------------------------------------------
 
+#   Python Modules
+import time
 
 class BAM(object):
 
-    def __init__(self, data):
+    def __init__(self, data, isBipolar=False):
         """
         Designated Initializer.
         Args:
@@ -47,15 +49,23 @@ class BAM(object):
 
         self.AB = []
 
-        # store associations in bipolar form to the array
-        for item in data:
-            self.AB.append(
-                [self.__l_make_bipolar(item[0]),
-                 self.__l_make_bipolar(item[1])]
-                )
+        if isBipolar:
+            print( "[ " + time.strftime( '%d-%b-%Y %H:%M:%S', time.localtime() )
+                   + " ] Input data is in Bipolar format." )
+
+            for item in data:
+                self.AB.append( [ item[ 0 ], item[ 1 ] ] )
+        else:
+            for item in data:
+                self.AB.append(
+                    [self.__l_make_bipolar(item[0]),
+                     self.__l_make_bipolar(item[1])]
+                    )
 
         self.len_x = len(self.AB[0][1])
         self.len_y = len(self.AB[0][0])
+
+        print("X: " + str(self.len_x) + ", Y: " + str(self.len_y))
 
         # create empty BAM matrix
         self.M = [[0 for x in range(self.len_x)] for x in range(self.len_y)]
@@ -71,12 +81,14 @@ class BAM(object):
         """
 
         for assoc_pair in self.AB:
-          X = assoc_pair[0]
-          Y = assoc_pair[1]
-         # calculate M
-          for idx, xi in enumerate(X):
-            for idy, yi in enumerate(Y):
-              self.M[idx][idy] += xi * yi
+
+            X = assoc_pair[0]
+            Y = assoc_pair[1]
+
+            # calculate M
+            for idx, xi in enumerate(X):
+                for idy, yi in enumerate(Y):
+                    self.M[idx][idy] += xi * yi
 
     def get_assoc(self, A):
         """
@@ -89,6 +101,7 @@ class BAM(object):
         """
 
         A = self.__mult_mat_vec(A)
+
         return self.__threshold(A)
 
     def get_bam_matrix(self):
@@ -102,7 +115,7 @@ class BAM(object):
 
     def __mult_mat_vec(self, vec):
         """
-        Multiples the input vector with a BAM matrix.
+        Multiplies the input vector with a BAM matrix.
         Args:
             vec: The input vector.
 
