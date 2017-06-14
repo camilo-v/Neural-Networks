@@ -65,8 +65,6 @@ class BAM(object):
         self.len_x = len(self.AB[0][1])
         self.len_y = len(self.AB[0][0])
 
-        print("X: " + str(self.len_x) + ", Y: " + str(self.len_y))
-
         # create empty BAM matrix
         self.M = [[0 for x in range(self.len_x)] for x in range(self.len_y)]
 
