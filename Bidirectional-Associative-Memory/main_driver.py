@@ -37,10 +37,9 @@
 # ---------------------------------------------------------------------------------------------------------------------
 
 #   Python Modules
-import os
-import sys
 import pprint
 import time
+import numpy as np
 
 #   Import the main implementation of the Bipolar Associative Memory.
 import bipolar_bam
@@ -53,39 +52,70 @@ print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] " +
        "Project 3, Bidirectional Associative Memory" + "" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 
+pp = pprint.PrettyPrinter( indent=4 )
 
 # -------------------------------------------------- Data Patterns ----------------------------------------------------
 #
+#   The "dataInBinary" dataset is used for debugging purposes, and the helper function '__l_make_bipolar' handles
+#   the conversion to bipolar encoding internally.  The data structures are 2D matrices that store the X-vector and
+#   y-vector representations of each letter.
 #
-data_pairs  = [
-        [[1, 0, 1, 0, 1, 0], [1, 1, 0, 0]],
-        [[1, 1, 1, 0, 0, 0], [1, 0, 1, 0]]
-        ]
-
-#   Data pattern for letter A.
-A_data = [
-    [[-1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1], [-1, -1, -1]]
+#   Indices are: data[X-vector][y-vector]
+#
+dataInBinary = [
+    [[0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1], [0, 0, 0]], # A
+    [[1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0], [0, 0, 1]], # B
+    [[0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1], [0, 1, 0]], # C
+    [[1, 1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 0], [0, 1, 1]], # D
+    [[1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1], [1, 0, 0]], # E
+    [[1, 1, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 0], [1, 0, 1]], # F
+    [[0, 1, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1], [1, 1, 0]], # G
+    [[1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1], [1, 1, 1]]  # H
 ]
 
-#   Data pattern for letter B.
-B_data = [
-    [[1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1], [-1, -1, 1]]
+dataInBiPolar = [
+    [[-1, 1, -1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1], [-1, -1, -1]],     # A
+    [[1, 1, -1, 1, -1, 1, 1, 1, -1, 1, -1, 1, 1, 1, -1], [-1, -1, 1]],      # B
+    [[-1, 1, 1, 1, -1, -1, 1, -1, -1, 1, -1, -1, -1, 1, 1], [-1, 1, -1]],   # C
+    [[1, 1, -1, 1, -1, 1, 1, -1, 1, 1, -1, 1, 1, 1, -1], [-1, 1, 1]],       # D
+    [[1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1], [1, -1, -1]],      # E
+    [[1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, -1, -1], [1, -1, 1]],     # F
+    [[-1, 1, 1, 1, -1, -1, 1, -1, 1, 1, -1, 1, -1, 1, 1], [1, 1, -1]],      # G
+    [[1, -1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1], [1, 1, 1]]          # H
 ]
 
-b = bipolar_bam.BAM(A_data)
+tempData = []
+
+for XvectorIndex in range(0, 8):
+    tempData.append([dataInBiPolar[XvectorIndex][0], dataInBiPolar[XvectorIndex][1]])
+
+print("*************************************")
+pp.pprint( tempData )
 
 
-pp = pprint.PrettyPrinter(indent=4)
+# --------------------------------------------------- BAM Training ----------------------------------------------------
+#
+#   Create a BAM object and pass it the pattern dataset that we wish to load into the memory.
+#
+b = bipolar_bam.BAM( dataInBiPolar, isBipolar=True )
 
-print ('Matrix: ')
+
+print ("\n")
+print ( "Matrix: " )
 pp.pprint(b.get_bam_matrix())
 
 print ('\n')
-print ('[1, 0, 1, 0, 1, 0] ---> ', b.get_assoc([1, 0, 1, 0, 1, 0]))
-print ('[1, 1, 1, 0, 0, 0] ---> ', b.get_assoc([1, 1, 1, 0, 0, 0]))
+
+# ---------------------------------------------------- BAM Testing ----------------------------------------------------
+#
+#   Once we have loaded the datasets into the BAM, we can go ahead and test it.
+
+#   Pattern A
+print ("[0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1] ---> ",
+       b.get_assoc([0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1]))
 
 
-
+print ('\n\n')
 
 # -------------------------------------------------- End --------------------------------------------------------------
 #
