@@ -168,3 +168,22 @@ class BAM(object):
                 ret_vec.append(1)
 
         return ret_vec
+
+    def hamdist( self, str1, str2 ):
+        """
+        Counts the number of differences between two strings of equal length.
+        Args:
+            str1:
+            str2:
+
+        Returns:
+
+        """
+
+        diffs = 0
+
+        for ch1, ch2 in zip( str1, str2 ):
+            if ch1 != ch2:
+                diffs += 1
+
+        return diffs
