@@ -173,11 +173,11 @@ class BAM(object):
         """
         Counts the number of differences between two strings of equal length.
         Args:
-            str1:
-            str2:
+            str1:   The first string to compare.
+            str2:   The second string to compare.
 
         Returns:
-
+            The number of differences between the string.
         """
 
         diffs = 0
