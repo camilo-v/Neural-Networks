@@ -40,6 +40,7 @@
 import pprint
 import time
 import numpy as np
+import itertools
 
 #   Import the main implementation of the Bipolar Associative Memory.
 import bipolar_bam
@@ -84,13 +85,14 @@ dataInBiPolar = [
     [[1, -1, 1, 1, -1, 1, 1, 1, 1, 1, -1, 1, 1, -1, 1], [1, 1, 1]]          # H
 ]
 
-tempData = []
-
-for XvectorIndex in range(0, 8):
-    tempData.append([dataInBiPolar[XvectorIndex][0], dataInBiPolar[XvectorIndex][1]])
-
-print("*************************************")
-pp.pprint( tempData )
+# combinationsData = []
+# for XvectorIndex in range(0, 8):
+#     combinationsData.append( [ dataInBiPolar[XvectorIndex][0], dataInBiPolar[XvectorIndex][1] ] )
+#
+# for L in range(0, len(combinationsData)+1):
+#   for subset in itertools.combinations(combinationsData, L):
+#     print(subset)
+#     b_testSet = bipolar_bam.BAM( subset, isBipolar=True )
 
 
 # --------------------------------------------------- BAM Training ----------------------------------------------------
