@@ -116,13 +116,38 @@ print ('\n')
 print ("[0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1] ---> ",
        b.get_assoc([0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1]))
 
+print ('\n\n')
+
+# ------------------------------------------------- Hamming Distance --------------------------------------------------
+#
+#   Calculates the Hamming Distances for X and Y
+print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] Hamming Distance" )
+
+#
+#   First we'll compare the X-Layer
+#
+for aRow in range(0, 8):
+    for aColumn in range( 0, 8 ):
+        print("Comparing X-Vector " + str(aRow) + " and " + str(aColumn) + ": " +
+              str( b.hamdist( dataInBiPolar[aRow][0], dataInBiPolar[aColumn][0] ) ) +
+              "\n")
+
+print("------------------------------------------------------------------------")
+
+#
+#   Then Calculate the Y-layer
+#
+for aRow in range(0, 8):
+    for aColumn in range( 0, 8 ):
+        print("Comparing X-Vector " + str(aRow) + " and " + str(aColumn) + ": " +
+              str( b.hamdist( dataInBiPolar[aRow][1], dataInBiPolar[aColumn][1] ) ) +
+              "\n")
 
 print ('\n\n')
 
 # -------------------------------------------------- End --------------------------------------------------------------
 #
 #
-print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ] Done." )
 print( "[ " + time.strftime('%d-%b-%Y %H:%M:%S', time.localtime()) + " ]" )
