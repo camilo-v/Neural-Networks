@@ -75,7 +75,7 @@ class BAM(object):
         """
         Creates a Bidirectional Associative Memory object.
         Returns:
-
+            Constructed BAM network from input data.
         """
 
         for assoc_pair in self.AB:
